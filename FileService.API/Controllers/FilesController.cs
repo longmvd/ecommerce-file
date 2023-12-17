@@ -80,7 +80,7 @@ namespace FileServices.API.Controllers
                 }
                 else
                 {
-                    response.OnError("");
+                    response.OnError(new ErrorResponse());
                 }
                 return Ok(response);
                 

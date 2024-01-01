@@ -152,6 +152,23 @@ namespace FileService.BL.FileServiceBL
             
         }
 
+        public  async Task<bool> DeleteFiles(List<string> fileNames)
+        {
+            try
+            {
+                var tasks = new List<Task<bool>>();
+                foreach(var fileName in fileNames)
+                {
+                    tasks.Add(DeleteFile(fileName));
+                }
+                var results = await Task.WhenAll(tasks);
+                return results.Any(res => res);
 
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
     }
 }

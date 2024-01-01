@@ -25,7 +25,8 @@ namespace FileServices.API.Controllers
             try
             {
                 var result =await _fileService.UploadFile(file);
-                return Ok(result);
+                var res = Ok(result);
+                return res;
             }
             catch (Exception ex)
             {
@@ -37,7 +38,7 @@ namespace FileServices.API.Controllers
         [Route("UploadFiles")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadFile(List<IFormFile> files, CancellationToken cancellationtoken)
+        public async Task<IActionResult> UploadFiles(List<IFormFile> files, CancellationToken cancellationtoken)
         {
             try
             {
@@ -93,6 +94,31 @@ namespace FileServices.API.Controllers
 
         }
 
+        [HttpDelete("bulk")]
+        public async Task<IActionResult> DeleteFiles([FromBody] List<string> fileNames)
+        {
+            try
+            {
+                var response = new ServiceResponse();
+                var res = await _fileService.DeleteFiles(fileNames);
+                if (res)
+                {
+                    response.OnSuccess(res);
+                }
+                else
+                {
+                    response.OnError(new ErrorResponse());
+                }
+                return Ok(response);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
 
     }
 }

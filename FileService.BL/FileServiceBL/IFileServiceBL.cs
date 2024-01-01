@@ -1,4 +1,5 @@
-﻿using FileService.Common.DTO;
+﻿using ECommerce.Common.DTO;
+using FileService.Common.DTO;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace FileService.BL.FileServiceBL
         Task<List<string>> UploadFiles(List<IFormFile> files);
 
         Task<bool> DeleteFile(string fileName);
+
+        Task<bool> DeleteFiles(List<string> fileNames);
 
 
     }
